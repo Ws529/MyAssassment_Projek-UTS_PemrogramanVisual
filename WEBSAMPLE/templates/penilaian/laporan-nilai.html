@@ -1,0 +1,46 @@
+<div class="container" ng-controller="LaporanNilaiController">
+    <h2>Laporan Nilai</h2>
+    
+    <div class="row mb-3">
+        <div class="col">
+            <input type="text" class="form-control" ng-model="search" placeholder="Cari...">
+        </div>
+        <div class="col">
+            <select class="form-control" ng-model="filterMataKuliah">
+                <option value="">Semua Mata Kuliah</option>
+                <option ng-repeat="mk in mataKuliah" value="{{mk.id}}">{{mk.nama}}</option>
+            </select>
+        </div>
+        <div class="col">
+            <button class="btn btn-success" ng-click="exportToExcel()">Export Excel</button>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th ng-click="sort('nim')">NIM</th>
+                <th ng-click="sort('mataKuliah')">Mata Kuliah</th>
+                <th ng-click="sort('tugas')">Tugas</th>
+                <th ng-click="sort('uts')">UTS</th>
+                <th ng-click="sort('uas')">UAS</th>
+                <th ng-click="sort('nilaiAkhir')">Nilai Akhir</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="n in nilai | filter:search | filter:{mataKuliah: filterMataKuliah}">
+                <td>{{n.nim}}</td>
+                <td>{{n.mataKuliah}}</td>
+                <td>{{n.tugas}}</td>
+                <td>{{n.uts}}</td>
+                <td>{{n.uas}}</td>
+                <td>{{n.nilaiAkhir}}</td>
+                <td>
+                    <button class="btn btn-sm btn-info" ng-click="showDetail(n)">Detail</button>
+                    <button class="btn btn-sm btn-danger" ng-click="deleteNilai(n.id)">Hapus</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

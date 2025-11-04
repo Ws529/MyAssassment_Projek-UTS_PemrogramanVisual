@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"samplecdn.fs.chunks"},{"v":2,"unique":true,"key":{"files_id":1,"n":1},"name":"files_id_1_n_1","ns":"samplecdn.fs.chunks"}],"uuid":"3f4eacf396564547bfc94261c5ca1b27"}

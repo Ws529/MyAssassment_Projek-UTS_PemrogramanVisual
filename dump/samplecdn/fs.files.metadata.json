@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"samplecdn.fs.files"},{"v":2,"key":{"filename":1,"uploadDate":1},"name":"filename_1_uploadDate_1","ns":"samplecdn.fs.files"}],"uuid":"aaba01a4d1dc44dda315fe15403a6bd3"}

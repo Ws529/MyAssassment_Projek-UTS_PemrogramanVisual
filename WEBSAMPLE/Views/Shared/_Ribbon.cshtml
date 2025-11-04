@@ -1,0 +1,40 @@
+﻿<!-- RIBBON -->
+<div id="ribbon">
+    <span class="ribbon-button-alignment">
+        <span id="refresh" class="btn btn-ribbon" ng-click="reloadPage()"><i class="fa fa-question-circle" ng-class="{'fa fa-question-circle':!isDocShow, 'fa fa-caret-right':isDocShow}"   ></i></span>
+    </span>
+
+    <ol class="breadcrumb">
+        <li>Home</li>
+        <li>Dashboard</li>
+    </ol>
+
+    <span class="ribbon-button-alignment pull-right">
+        <span id="btn-load-schema" class="btn btn-ribbon hide" data-title="generate-schema"><i class="fa fa-cogs"></i>  Generate Schema </span>
+        <span id="btn-save-editor" class="btn btn-ribbon hide" data-title="save-editor"><i class="fa fa-save"></i>  Save </span>
+        <span id="btn-clear-cache" class="btn btn-ribbon hide" data-title="clear-cache"><i class="fa fa-trash"></i>  Clear Cache </span>
+        <span id="btn-menu-func" class="btn btn-ribbon hide" data-title="list-func">
+            <a href="#" class="dropdown-toggle no-margin userdropdown fa fa-navicon" data-toggle="dropdown">
+            </a>
+            <ul class="dropdown-menu pull-right">
+                <li>
+                    <a href="javascript:changeview(1);" > HTML</a>
+                </li> 
+                <li>
+                    <a href="javascript:changeview(2);" > User Requirement</a>
+                </li> 
+                <li>
+                    <a href="javascript:changeview(3);" > Flow and Design</a>
+                </li> 
+                <li>
+                    <a href="javascript:changeview(4);" > Histories</a>
+                </li> 
+                <li>
+                    <a href="javascript:changeview(5);" > User Documentation</a>
+                </li> 
+            </ul>
+        </span>
+    </span>
+
+</div>
+<!-- END RIBBON -->

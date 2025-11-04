@@ -1,0 +1,253 @@
+<!-- WEBSAMPLE/templates/penilaian/input-nilai.html -->
+<div class="container-fluid" ng-controller="InputNilaiController">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-pencil"></i> Input Nilai Siswa
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <!-- Alert Messages -->
+                    <div ng-show="alert.show" class="alert" ng-class="'alert-' + alert.type" role="alert">
+                        <button type="button" class="close" ng-click="closeAlert()">&times;</button>
+                        <strong>{{alert.title}}</strong> {{alert.message}}
+                    </div>
+
+                    <!-- Form Input Nilai -->
+                    <form name="nilaiForm" ng-submit="saveNilai()" novalidate>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group" ng-class="{'has-error': nilaiForm.nama.$invalid && nilaiForm.nama.$touched}">
+                                    <label for="nama">Nama Siswa <span class="text-danger">*</span></label>
+                                    <input type="text" 
+                                           class="form-control" 
+                                           id="nama" 
+                                           name="nama"
+                                           ng-model="nilai.nama" 
+                                           placeholder="Masukkan nama siswa"
+                                           required>
+                                    <span class="help-block" ng-show="nilaiForm.nama.$invalid && nilaiForm.nama.$touched">
+                                        Nama siswa wajib diisi
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" ng-class="{'has-error': nilaiForm.nis.$invalid && nilaiForm.nis.$touched}">
+                                    <label for="nis">NIS <span class="text-danger">*</span></label>
+                                    <input type="text" 
+                                           class="form-control" 
+                                           id="nis" 
+                                           name="nis"
+                                           ng-model="nilai.nis" 
+                                           placeholder="Masukkan NIS"
+                                           required>
+                                    <span class="help-block" ng-show="nilaiForm.nis.$invalid && nilaiForm.nis.$touched">
+                                        NIS wajib diisi
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group" ng-class="{'has-error': nilaiForm.mapel.$invalid && nilaiForm.mapel.$touched}">
+                                    <label for="mapel">Mata Pelajaran <span class="text-danger">*</span></label>
+                                    <select class="form-control" 
+                                            id="mapel" 
+                                            name="mapel"
+                                            ng-model="nilai.mapel" 
+                                            required>
+                                        <option value="">-- Pilih Mata Pelajaran --</option>
+                                        <option value="Matematika">Matematika</option>
+                                        <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+                                        <option value="Bahasa Inggris">Bahasa Inggris</option>
+                                        <option value="IPA">IPA</option>
+                                        <option value="IPS">IPS</option>
+                                        <option value="Agama">Agama</option>
+                                        <option value="PJOK">PJOK</option>
+                                        <option value="Seni Budaya">Seni Budaya</option>
+                                    </select>
+                                    <span class="help-block" ng-show="nilaiForm.mapel.$invalid && nilaiForm.mapel.$touched">
+                                        Mata pelajaran wajib dipilih
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" ng-class="{'has-error': nilaiForm.semester.$invalid && nilaiForm.semester.$touched}">
+                                    <label for="semester">Semester <span class="text-danger">*</span></label>
+                                    <select class="form-control" 
+                                            id="semester" 
+                                            name="semester"
+                                            ng-model="nilai.semester" 
+                                            required>
+                                        <option value="">-- Pilih Semester --</option>
+                                        <option value="1">Semester 1</option>
+                                        <option value="2">Semester 2</option>
+                                    </select>
+                                    <span class="help-block" ng-show="nilaiForm.semester.$invalid && nilaiForm.semester.$touched">
+                                        Semester wajib dipilih
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group" ng-class="{'has-error': nilaiForm.tugas.$invalid && nilaiForm.tugas.$touched}">
+                                    <label for="tugas">Nilai Tugas <span class="text-danger">*</span></label>
+                                    <input type="number" 
+                                           class="form-control" 
+                                           id="tugas" 
+                                           name="tugas"
+                                           ng-model="nilai.tugas" 
+                                           placeholder="0-100"
+                                           min="0"
+                                           max="100"
+                                           step="0.01"
+                                           required>
+                                    <span class="help-block" ng-show="nilaiForm.tugas.$invalid && nilaiForm.tugas.$touched">
+                                        Nilai tugas harus antara 0-100
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group" ng-class="{'has-error': nilaiForm.uts.$invalid && nilaiForm.uts.$touched}">
+                                    <label for="uts">Nilai UTS <span class="text-danger">*</span></label>
+                                    <input type="number" 
+                                           class="form-control" 
+                                           id="uts" 
+                                           name="uts"
+                                           ng-model="nilai.uts" 
+                                           placeholder="0-100"
+                                           min="0"
+                                           max="100"
+                                           step="0.01"
+                                           required>
+                                    <span class="help-block" ng-show="nilaiForm.uts.$invalid && nilaiForm.uts.$touched">
+                                        Nilai UTS harus antara 0-100
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group" ng-class="{'has-error': nilaiForm.uas.$invalid && nilaiForm.uas.$touched}">
+                                    <label for="uas">Nilai UAS <span class="text-danger">*</span></label>
+                                    <input type="number" 
+                                           class="form-control" 
+                                           id="uas" 
+                                           name="uas"
+                                           ng-model="nilai.uas" 
+                                           placeholder="0-100"
+                                           min="0"
+                                           max="100"
+                                           step="0.01"
+                                           required>
+                                    <span class="help-block" ng-show="nilaiForm.uas.$invalid && nilaiForm.uas.$touched">
+                                        Nilai UAS harus antara 0-100
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="keterangan">Keterangan</label>
+                                    <textarea class="form-control" 
+                                              id="keterangan" 
+                                              name="keterangan"
+                                              ng-model="nilai.keterangan" 
+                                              rows="3"
+                                              placeholder="Keterangan tambahan (opsional)"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" 
+                                    class="btn btn-primary" 
+                                    ng-disabled="nilaiForm.$invalid || isLoading">
+                                <i class="fa fa-save"></i> 
+                                <span ng-show="!isLoading">Simpan Nilai</span>
+                                <span ng-show="isLoading">Menyimpan...</span>
+                            </button>
+                            <button type="button" 
+                                    class="btn btn-default" 
+                                    ng-click="resetForm()">
+                                <i class="fa fa-refresh"></i> Reset
+                            </button>
+                            <a href="#/penilaian/laporan" class="btn btn-info">
+                                <i class="fa fa-table"></i> Lihat Laporan
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview Nilai Akhir -->
+    <div class="row" ng-show="nilai.tugas && nilai.uts && nilai.uas">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-calculator"></i> Preview Nilai Akhir
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row text-center">
+                        <div class="col-md-3">
+                            <h4>Nilai Tugas</h4>
+                            <h2 class="text-info">{{nilai.tugas}}</h2>
+                        </div>
+                        <div class="col-md-3">
+                            <h4>Nilai UTS</h4>
+                            <h2 class="text-info">{{nilai.uts}}</h2>
+                        </div>
+                        <div class="col-md-3">
+                            <h4>Nilai UAS</h4>
+                            <h2 class="text-info">{{nilai.uas}}</h2>
+                        </div>
+                        <div class="col-md-3">
+                            <h4>Nilai Akhir</h4>
+                            <h2 class="text-success">{{calculateNilaiAkhir()}}</h2>
+                            <p class="text-muted">(30% + 30% + 40%)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.panel {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 4px;
+}
+
+.panel-heading {
+    border-radius: 4px 4px 0 0;
+}
+
+.form-control:focus {
+    border-color: #66afe9;
+    box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.has-error .form-control {
+    border-color: #a94442;
+}
+
+.help-block {
+    color: #a94442;
+    font-size: 12px;
+}
+
+.btn {
+    border-radius: 3px;
+    margin-right: 5px;
+}
+</style>

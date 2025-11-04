@@ -1,0 +1,70 @@
+﻿<script type="text/javascript">
+    function templateById(id) {
+        return "@Settings.Home" + "api/files/templates/" + id + "/html";
+    }
+    function controllerById(id) {
+        return "@Settings.Home" + "api/files/templates/" + id + "/js";
+    }
+    function cssById(id) {
+        return "@Settings.Home" + "api/files/templates/" + id + "/css";
+    };
+
+    window.DevelopmentMode = "@Settings.DevelopmentMode";
+    window.BaseAddress = "@Settings.Home";
+
+</script>
+
+@if (@Model is HelperResult)
+{
+    @Model
+}
+
+<script src="@Url.Content("~/assets/js/jquery-bundle.js")"></script>
+<script src="@Url.Content("~/assets/js/angular.min.js")"></script>
+<script src="@Url.Content("~/assets/js/codemirror-bundle.js")"></script>
+<script src="@Url.Content("~/assets/js/jquery.signalR-2.2.3.min.js")"></script>
+<script src="@Url.Content("~/assets/js/myscripts-1.4.14.min.js")"></script>
+<script src="@Url.Content("~/assets/js/jszip.min.js")"></script>
+<script src="@Url.Content("~/assets/js/kendo.all.min.js")"></script>
+<script src="@Url.Content("~/assets/handsontable/dist/handsontable.full.min.js")"></script>
+<script src="@Url.Content("~/assets/js/kendo.ext.min.js")"></script>
+<script src="@Url.Content("~/assets/tinymce/tinymce.min.js")"></script>
+<script src="@Url.Content("~/assets/js/app-run-first.js")"></script>
+<script src="@Url.Content("~/assets/js/img_editor.js")"></script>
+<script src="@Url.Content("~/assets/js/hierarchy-select.min.js")"></script>
+<script src="@Url.Content("~/assets/js/xlsx.js")"></script>
+<script src="@Url.Content("~/assets/js/hmac-sha256.js")"></script>
+<script src="@Url.Content("~/assets/js/enc-base64-min.js")"></script>
+<script src="@Url.Content("~/assets/js/FileSaver.min.js")"></script>
+<script src="@Url.Content("~/assets/js/angular-json-explorer.min.js")"></script>
+<script src="signalr/hubs"></script>
+<script src="@Url.Content("~/assets/js/signalr-hub.min.js")"></script> 
+
+<script type="text/javascript">
+    function GenerateHashHMAC(s, k) {
+        var hash = CryptoJS.HmacSHA256(s, k);
+        return CryptoJS.enc.Base64.stringify(hash);
+    }
+</script>
+
+@if (ViewBag.Developer == true)
+{
+    <script type="text/javascript">
+        if (window.IsDeveloper == "True") {
+            loadScript('@Url.Content("~/cdn/system/content/scripts/app/layout.js")', function() {
+                $('#btn-clear-cache').on('click', function(e) {
+                    toastr["success"]("cache clear", "Success");
+                });
+                $('#btn-save-editor').removeClass("hide");
+                $("#btn-load-schema").removeClass("hide");
+                $("#btn-clear-cache").removeClass("hide");
+                $("#btn-menu-func").removeClass("hide");
+                $("#search-fld").width(500);
+            });
+        }
+    </script>
+}
+else
+{
+    <script data-main="@Url.Content("~/cdn/system/content/r-config")" src="@Url.Content("~/cdn/system/content/scripts/require.js")"></script>
+}

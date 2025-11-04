@@ -1,0 +1,425 @@
+﻿<aside id="left-panel">
+    @{ Html.RenderPartial("_CurrentUser"); }
+
+    <nav ng-controller="NavigationCtrl">
+        <ul id="myNavigation">
+            <li class="@Html.RouteIf("index", "active")">
+                <a href="#/home" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i><span class="menu-item-parent">Dashboard</span></a>
+                @if (ViewBag.Developer == true)
+                {
+                    <ul>
+                        <li>
+                            <a href="#GLOBALFN"><i class="fa fa-gear"></i>GLOBALFN</a>
+                        </li>
+                        <li>
+                            <a href="#GLOBALAPP"><i class="fa fa-gear"></i>GLOBALAPP</a>
+                        </li>
+                        <li>
+                            <a href="#GLOBALTEST"><i class="fa fa-gear"></i>GLOBALTEST</a>
+                        </li>
+                        <li>
+                            <a href="#MASTERFORM2"><i class="fa fa-gear"></i>General Form</a>
+                        </li>
+                        <li>
+                            <a href="#MASTERDETAILFORM2"><i class="fa fa-gear"></i>Master Detail</a>
+                            <ul>
+                                <li>
+                                    <a href="#DETAILFORM"><i class="fa fa-gear"></i>Detail Form</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-gear"></i>App Config</a>
+                            <ul>
+                                <li>
+                                    <a href="#system/content/r-config.js"><i class="fa fa-gear"></i>App Config</a>
+                                </li>
+                                <li>
+                                    <a href="#system/content/app-run-first.js"><i class="fa fa-gear"></i>Load First</a>
+                                </li>
+                                <li>
+                                    <a href="#content/scripts/appmylogin.js"><i class="fa fa-gear"></i>App Login</a>
+                                </li>
+                                <li>
+                                    <a href="#system/content/app-run.js"><i class="fa fa-gear"></i>App Run</a>
+                                </li>
+                                <li>
+                                    <a href="#system/content/scripts/app/layout.js"><i class="fa fa-gear"></i>Developer Mode</a>
+                                </li>
+                                <li>
+                                    <a href="#system/content/release.css"><i class="fa fa-gear"></i>Release CSS</a>
+                                </li>
+                                <li>
+                                    <a href="#system/content/css/overrides.css"><i class="fa fa-gear"></i>Overrides CSS</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                }
+            </li>
+
+            @*<li class="@Html.RouteIf("inbox", "active")">
+                <a href="#"><i class="fa fa-lg fa-fw fa-inbox"></i> <span class="menu-item-parent">Inbox</span><span class="badge pull-right inbox-badge">1</span></a>
+            </li>*@
+            @if (Model != null)
+            {
+                foreach (var nav in Model)
+                {
+                    <li id="module-@nav.MenuId">
+                        <a href="#" title="@nav.MenuCaption">
+                            <i class="@nav.Icon"></i><span class="menu-item-parent">@nav.MenuCaption</span>
+                        </a>
+                        @if (nav.Detail.Count > 0)
+                        {
+                            <ul>
+                                @foreach (var nav1 in nav.Detail)
+                        {
+                                    <li>
+                                        <a href="@nav1.Url"><i class="@nav1.Icon"></i> @nav1.MenuCaption</a>
+                                        @if (nav1.Detail.Count > 0)
+                                        {
+                                            <ul>
+                                                @foreach (var nav2 in nav1.Detail)
+                                                {
+                                                    <li>
+                                                        <a href="@nav2.Url"><i class="@nav2.Icon"></i>@nav2.MenuCaption</a>
+                                                        @if (nav2.Detail.Count > 0)
+                                                        {
+                                                            <ul>
+                                                                @foreach (var nav3 in nav2.Detail)
+                                                                {
+                                                                    <li>
+                                                                        <a href="@nav3.Url"><i class="@nav3.Icon"></i>@nav3.MenuCaption</a>
+                                                                        @if (nav3.Detail.Count > 0)
+                                                                        {
+                                                                            <ul>
+                                                                                @foreach (var nav4 in nav3.Detail)
+                                                                                {
+                                                                                    <li>
+                                                                                        <a href="@nav4.Url"><i class="@nav4.Icon"></i>@nav4.MenuCaption</a>
+                                                                                    </li>
+                                                                                }
+                                                                            </ul>
+                                                                        }
+                                                                    </li>
+                                                                }
+                                                            </ul>
+                                                        }
+                                                    </li>
+                                                }
+                                            </ul>
+                                        }
+                                    </li>
+                                }
+                            </ul>
+                        }
+                    </li>
+                }
+            }
+
+
+            @if (ViewBag.IsDeveloper == true && ViewBag.Admin == true && ViewBag.IsSuperuser == true)
+            {
+                if (ViewBag.Developer == true)
+                {
+                    <li>
+                        <a href="#" title="Administration Tools"><i class="fa fa-lg fa-fw fa-wrench"></i>Administration Tools</a>
+                        <ul>
+                            <li>
+                                <a href="#AdminConfiguration" title="Configuration"><i class="fa fa-wrench"></i> Configuration</a>
+                            </li>
+                            <li>
+                                <a href="#AdminStdMsg" title="Standard Messages"><i class="fa fa-wrench"></i> Standard Messages</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Administration"><i class="fa fa-user-secret"></i>App Management</a>
+                                <ul>
+                                    <li>
+                                        <a href="#AdminMenuManagement" title="Administration Menu"><i class="fa fa-list"></i> Menus Management</a>
+                                    </li>
+                                    <li>
+                                        <a href="#AdminUser" title="AspNet Identity"><i class="fa fa-users"></i> User Identity</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" title="Database"><i class="fa fa-database"></i> Database Utility</a>
+                                <ul>
+                                    <li>
+                                        <a href="#AdminImportData" title="Import Raw Data">Import Row Data</a>
+                                    </li>
+                                    <li>
+                                        <a href="#AdminSQLData" title="Data Browser">SQL Tester</a>
+                                    </li>
+                                    <li>
+                                        <a href="#AdminImportDataConfigDB" title="Setup Target Database">Target Database</a>
+                                    </li>
+                                    <li>
+                                        <a href="#AdminImportDataConfigSchema" title="Setup Target Schema">Target Schema</a>
+                                    </li>
+                                    <li>
+                                        <a href="#AdminFunctions" title="Function Definition">Function Definition</a>
+                                    </li>
+                                    <li>
+                                        <a href="#AdminQueryFunctions" title="Report Definition"><i class="fa fa-puzzle-piece"></i> Report Definition</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" title="Utility"><i class="fa fa-wrench"></i> Utilities</a>
+                                <ul>
+                                    <li>
+                                        <a href="#AdminDataFiles" title="File Manager"><i class="fa fa-file-text-o"></i> Files Collection</a>
+                                    </li>
+                                    <li>
+                                        <a href="#AdminDataFilesS3" title="File Manager S3"><i class="fa fa-file-text-o"></i> S3 Files Collection</a>
+                                    </li>
+                                    <li>
+                                        <a href="#AdminDataFilesFT" title="File Manager FileTable"><i class="fa fa-file-text-o"></i> SQL FileTable</a>
+                                    </li>
+                                    <li>
+                                        <a href="#AdminIconsCollection" title="Icon Collections"><i class="fa fa-fonticons"></i> Icon Collections</a>
+                                    </li>
+                                    <li>
+                                        <a href="#AdminUpdateAPI" title="Update API"><i class="fa fa-cloud-upload"></i> Upload API</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" title="Mobile Demo"><i class="fa fa-folder"></i>Framework7 Demo</a>
+                                <ul>
+                                    <li>
+                                        <a href="#apps/f7demos/about"><i class=""></i>about</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/accordion"><i class=""></i>Accordion</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/autocomplete"><i class=""></i>Autocomplete</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/calendar"><i class=""></i>Calendar</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/cards"><i class=""></i>Cards</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/contacts"><i class=""></i>contacts</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/chips"><i class=""></i>chips</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/floating-button"><i class=""></i>floating-button</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/forms"><i class=""></i>forms</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/grid"><i class=""></i>grid</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/infinite-scroll"><i class=""></i>infinite-scroll</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/lazy-load"><i class=""></i>lazy-load</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/list-view"><i class=""></i>list-view</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/login-screen"><i class=""></i>login-screen</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/media-lists"><i class=""></i>media-lists</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/messages"><i class=""></i>messages</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/modals"><i class=""></i>modals</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/bars"><i class=""></i>bars</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/notifications"><i class=""></i>notifications</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/photo-browser"><i class=""></i>photo-browser</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/picker"><i class=""></i>picker</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/popover"><i class=""></i>popover</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/preloader"><i class=""></i>preloader</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/progressbar"><i class=""></i>progressbar</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/pull-to-refresh"><i class=""></i>pull-to-refresh</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/searchbar"><i class=""></i>searchbar</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/panels"><i class=""></i>panels</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/sortable-list"><i class=""></i>sortable-list</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/swipe-delete"><i class=""></i>swipe-delete</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/swiper"><i class=""></i>swiper</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/tabs"><i class=""></i>tabs</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/virtual-list"><i class=""></i>virtual-list</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/color-themes"><i class=""></i>color-themes</a>
+                                    </li>
+                                    <li>
+                                        <a href="#apps/f7demos/core-features"><i class=""></i>core-features</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a href="#" title="Administration Tools"><i class="fa fa-lg fa-fw fa-wrench"></i>Administration Tools</a>
+                        <ul>
+                            <li>
+                                <a href="#/AdminConfiguration" title="Configuration"><i class="fa fa-wrench"></i> Configuration</a>
+                            </li>
+                            <li>
+                                <a href="#/AdminStdMsg" title="Standard Messages"><i class="fa fa-wrench"></i> Standard Messages</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Administration"><i class="fa fa-user-secret"></i>App Management</a>
+                                <ul>
+                                    <li>
+                                        <a href="#/AdminMenuManagement" title="Administration Menu"><i class="fa fa-list"></i> Menus Management</a>
+                                    </li>
+                                    <li>
+                                        <a href="#/AdminUser" title="AspNet Identity"><i class="fa fa-users"></i> User Identity</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" title="Database"><i class="fa fa-database"></i> Database Utility</a>
+                                <ul>
+                                    <li>
+                                        <a href="#/AdminImportData" title="Import Raw Data"><i class="fa fa-upload"></i> Import Row Data</a>
+                                    </li>
+                                    <li>
+                                        <a href="#/AdminSQLData" title="Data Browser"><i class="fa fa-flash"></i> SQL Tester</a>
+                                    </li>
+                                    <li>
+                                        <a href="#/AdminImportDataConfigDB" title="Setup Target Database"><i class="fa fa-database"></i> Target Database</a>
+                                    </li>
+                                    <li>
+                                        <a href="#/AdminImportDataConfigSchema" title="Setup Target Schema"><i class="fa fa-table"></i> Target Schema</a>
+                                    </li>
+                                    <li>
+                                        <a href="#/AdminFunctions" title="Function Definition"><i class="fa fa-code"></i> Function Definition</a>
+                                    </li>
+                                    <li>
+                                        <a href="#/AdminQueryFunctions" title="Report Definition"><i class="fa fa-puzzle-piece"></i> Report Definition</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" title="Utility"><i class="fa fa-wrench"></i> Utilities</a>
+                                <ul>
+                                    <li>
+                                        <a href="#/AdminDataFiles" title="File Manager"><i class="fa fa-file-text-o"></i> Files Collection</a>
+                                    </li>
+                                    <li>
+                                        <a href="#/AdminDataFilesS3" title="File Manager S3"><i class="fa fa-file-text-o"></i> S3 Files Collection</a>
+                                    </li>
+                                    <li>
+                                        <a href="#/AdminDataFilesFT" title="File Manager SQL FileTable"><i class="fa fa-file-text-o"></i> SQL FileTable</a>
+                                    </li>
+                                    <li>
+                                        <a href="#/AdminIconsCollection" title="Icon Collections"><i class="fa fa-fonticons"></i> Icon Collections</a>
+                                    </li>
+                                    <li>
+                                        <a href="#/AdminUpdateAPI" title="Update API"><i class="fa fa-cloud-upload"></i> Upload API</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                }
+            }
+
+            @if (ViewBag.IsDeveloper == true && ViewBag.Admin == true && ViewBag.IsSuperuser == true)
+            {
+                if (ViewBag.Developer == true)
+                {
+                    <li>
+                        <a href="#" title="Developer Area"><i class="fa fa-lg fa-fw fa-hashtag"></i>Developer Area</a>
+                        <ul>
+                            <li>
+                                <a href="#AdminDevDashboard" title="Configuration"><i class="fa fa-tachometer"></i> Dashboard</a>
+                            </li> 
+                            <li>
+                                <a href="#AdminDevTimeline" title="Developer Timeline"><i class="fa fa-list"></i> Timeline</a>
+                            </li>
+                            <li>
+                                <a href="#AdminDevSharedNotes" title="Shared Notes"><i class="fa fa-sticky-note-o"></i> Shared Notes</a>
+                            </li>
+                            <li>
+                                <a href="#AdminDevMenus" title="Sample Management"><i class="fa fa-keyboard-o"></i> Sample Management</a>
+                            </li>
+                            <li>
+                                <a href="#" title="List Of Samples"><i class="fa fa-puzzle-piece"></i> List of Samples</a>
+                            </li> 
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a href="#" title="Developer Area"><i class="fa fa-lg fa-fw fa-hashtag"></i>Developer Area</a>
+                        <ul>
+                            <li>
+                                <a href="#/AdminDevDashboard" title="Configuration"><i class="fa fa-tachometer"></i> Dashboard</a>
+                            </li>
+                            <li>
+                                <a href="#/AdminDevTimeline" title="Developer Timeline"><i class="fa fa-list"></i> Timeline</a>
+                            </li>
+                            <li>
+                                <a href="#/AdminDevSharedNotes" title="Shared Notes"><i class="fa fa-sticky-note-o"></i> Shared Notes</a>
+                            </li>
+                            <li>
+                                <a href="#/AdminDevMenus" title="Sample Management"><i class="fa fa-keyboard-o"></i> Sample Management</a>
+                            </li>
+                            <li>
+                                <a href="#" title="List Of Samples"><i class="fa fa-puzzle-piece"></i> List of Samples</a>
+                            </li>
+                        </ul>
+                    </li>
+                }
+            }
+
+        </ul>
+
+    </nav>
+
+    <span class="minifyme" data-action="minifyMenu">
+        <i class="fa fa-arrow-circle-left hit"></i>
+    </span>
+</aside>

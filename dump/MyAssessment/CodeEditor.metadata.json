@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"samplecode.CodeEditor"},{"v":2,"key":{"filename":1},"name":"filename_1","ns":"samplecode.CodeEditor"}],"uuid":"5092fb55ebbf446b8635f0718b523eea"}

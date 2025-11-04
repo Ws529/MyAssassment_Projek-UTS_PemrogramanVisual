@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"sampledocs.FileInfo"},{"v":2,"key":{"AutoNo":1},"name":"AutoNo_1","ns":"sampledocs.FileInfo"}],"uuid":"05e885d484234701bf92c1f4c00847d2"}

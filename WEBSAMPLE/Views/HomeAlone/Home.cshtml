@@ -1,0 +1,9 @@
+﻿@if (ViewBag.RedirectToApp == "1")
+{
+    Response.Redirect("app");
+}
+else
+{
+    Layout = "_LayoutHome.cshtml";
+    @Html.Raw(ViewBag.content);
+}

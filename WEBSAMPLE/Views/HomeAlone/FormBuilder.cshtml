@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Builder</title> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    @Styles.Render("cdn/system/content/release.css") 
+    @Styles.Render("cdn/system/content/css/ngFormBuilder-full.min.css")
+    @Styles.Render("cdn/system/content/css/angular-json-explorer.min.css")
+</head>
+<body>
+
+    <div class="page-content" ng-app="formioApp">
+        <div class="container-fluid">
+            <div>
+                <div class="row">
+                   
+                    <div class="col-sm-6">
+                        <div class="label">Layout</div>
+                        <div class="btn btn-success" ng-click="saveLayout()">Save</div>
+                        <input class="col-sm-4" type="text" placeholder="" ng-model="filename"/>
+                        <div class="btn btn-primary" ng-click="loadLayout()">Load</div> 
+                        
+                    </div>
+                    <div class="col-sm-6">
+                        <select class="form-control form-type-select" ng-model="form.display" ng-options="display.name as display.title for display in displays"></select>
+                    </div>
+                    
+                </div>
+                <div class="clearfix"></div>
+                @*<div class="row">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <h3 class="text-center text-muted">The <a href="#" target="_blank">Form Builder</a> allows you to build a <select class="form-control form-type-select" ng-model="form.display" ng-options="display.name as display.title for display in displays"></select></h3>
+                        
+
+                        <div class="well" style="background-color: #fdfdfd;">
+                            <form-builder form="form"></form-builder>
+                        </div>
+                    </div>
+                </div>*@
+                <div class="row">
+                    <div class="clearfix"></div>
+                    <div class="col-sm-6">
+                        <h3 class="text-center text-muted">The <a href="#" target="_blank">Form Builder</a> allows you to build form</h3>
+
+
+                        <div class="well" style="background-color: #fdfdfd;">
+                            <form-builder form="form"></form-builder>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <h3 class="text-center text-muted">which <a href="#" target="_blank">Renders as a Form</a> in your Application</h3>
+                        <div class="well">
+                            <formio form="form" ng-if="renderForm"></formio>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="clearfix"></div>
+                @*<div class="row">
+                    <h3 class="text-center text-muted">as JSON Schema</h3>
+                    <pre class="bg-info"><h4><code>$rootScope.form = </code><div  data-clipboard-target="#formjson" class="btn btn-success" id="copyToCB">Copy</div></h4></pre>
+                    <div class="well jsonviewer">
+                        <hidden id="formjson" ng-model="form"></hidden>
+                        <json-explorer data="form" collapsed="jsonCollapsed"></json-explorer>
+                    </div>
+                </div>*@
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="@Url.Content("~/cdn/system/content/scripts/libs/formbuilder/jquery.min.js")"></script> 
+    <script src="@Url.Content("~/cdn/system/content/scripts/libs/angular-1.5.11/angular.min.js")"></script>
+    <script src="@Url.Content("~/cdn/system/content/scripts/libs/formbuilder/es6-promise.min.js")"></script>
+    <script src="@Url.Content("~/cdn/system/content/scripts/libs/formbuilder/signature_pad.min.js")"></script> 
+    <script src="@Url.Content("~/cdn/system/content/scripts/libs/formbuilder/ckeditor.js")"></script>
+    <script src="@Url.Content("~/cdn/system/content/scripts/libs/formbuilder/ngFormBuilder-complete.min.js")"></script>
+    <script src="@Url.Content("~/cdn/system/content/scripts/libs/formbuilder/angular-json-explorer.min.js")"></script>
+    <script src="@Url.Content("~/cdn/system/content/scripts/formbuilder/main.js")"></script>
+     
+</body>
+</html>
