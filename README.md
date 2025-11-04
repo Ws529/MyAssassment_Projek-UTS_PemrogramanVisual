@@ -1,155 +1,135 @@
-# MyAssassment_Projek-UTS_PemrogramanVisual
-MyAssassment - Projek UTS Pemrograman Visual (Desktop)
+# 🧮 MyAssessment — Sistem Penilaian Siswa  
+**Developer:** PT. Hyoka Wanssss  
+**Teknologi:** ASP.NET Web API, AngularJS, SQL Server, MongoDB, IIS
 
-Proses setup proyek ini melibatkan dua bagian utama: backend (Web Service) dan hosting (Configuration Web).
+---
 
-Setting Web Service (Backend ASP.NET Web API):
+## 📘 Deskripsi Proyek
 
-Konfigurasi API: Logika routing API diatur dalam file App_Start/WebApiConfig.cs. File ini kemudian "dinyalakan" saat aplikasi pertama kali berjalan dengan memanggil GlobalConfiguration.Configure(WebApiConfig.Register) dari file Global.asax.cs.
+**MyAssessment** adalah aplikasi web untuk mengelola dan mengaudit nilai siswa.  
+Proyek ini dikembangkan sebagai **studi kasus arsitektur Polyglot Persistence**, di mana dua jenis database digunakan secara bersamaan:
 
-Pembuatan Model: Model data C# (seperti NilaiModel.cs) dibuat di dalam folder Models untuk menentukan struktur data yang akan diterima dari frontend.
+- **SQL Server** → menyimpan data nilai utama (terstruktur & transaksional)  
+- **MongoDB** → mencatat log perubahan (audit trail) dengan fleksibilitas tinggi  
 
-Pembuatan Controller: API Controller (seperti PenilaianController.cs) dibuat di folder Controllers. Ini adalah "otak" backend yang berisi endpoint (misal: [HttpPost, Route("input")]) untuk menerima data, memvalidasinya, menghitung nilai akhir, dan menyimpannya ke database.
+Aplikasi ini menunjukkan bagaimana satu sistem dapat menyeimbangkan **akurasi data** dan **volume log besar** dengan memanfaatkan kekuatan dua teknologi database berbeda.
 
-Configuration Web (Frontend & Hosting):
+---
 
-Hosting di IIS: Aplikasi ini di-deploy menggunakan Internet Information Services (IIS). Prosesnya meliputi:
+## 🏗️ Arsitektur Proyek
 
-Membuat Application Pool baru ("MyAssessment").
+Proyek ini terdiri dari dua bagian utama:
 
-Menambahkan Website baru ("MyAssessment").
+### 1. Backend (Web Service)
+Dibangun menggunakan **ASP.NET Web API** dan di-host melalui **IIS**.
 
-Mengatur Physical Path (Jalur Fisik) agar menunjuk ke folder build aplikasi (misal: C:\Framework MyAssessment\WEBSAMPLE).
+**Struktur utama:**
+- **Routing API:**  
+  Diatur dalam `App_Start/WebApiConfig.cs` dan dipanggil dari `Global.asax.cs` menggunakan `GlobalConfiguration.Configure(WebApiConfig.Register)`.
+- **Model:**  
+  File seperti `NilaiModel.cs` di folder `Models/` mendefinisikan struktur data nilai siswa.
+- **Controller:**  
+  File seperti `PenilaianController.cs` di folder `Controllers/` menangani request, validasi, perhitungan nilai akhir, dan penyimpanan data ke SQL & MongoDB.
 
-Mengatur Bindings (Pengikatan) untuk menetapkan port (misal: port 9000).
+---
 
-Konfigurasi Koneksi: File connections.config adalah file vital yang menyimpan semua connection string. File ini dibaca oleh backend untuk mengetahui cara terhubung ke SQL Server (menggunakan kunci UserDBContext) dan MongoDB (menggunakan kunci MongoDBData).
+### 2. Configuration Web (Frontend & Hosting)
+Frontend dibangun sebagai **Single Page Application (SPA)** dengan **AngularJS**.
 
-Konfigurasi Frontend (SPA): Karena ini adalah Single Page Application (SPA), file app.js digunakan untuk mengatur routing di sisi klien. File ini memetakan URL (misal: .../#/input-nilai) ke file HTML (templates/penilaian/input-nilai.html) dan file JavaScript (InputNilaiController.js) yang sesuai.
+**Detail Konfigurasi:**
+- **Hosting IIS:**  
+  1. Membuat *Application Pool* baru (`MyAssessment`)  
+  2. Menambahkan *Website* baru dengan jalur fisik `C:\Framework MyAssessment\WEBSAMPLE`  
+  3. Mengatur port binding (contoh: `9000`)
+- **Connection Settings:**  
+  File `connections.config` menyimpan *connection string* untuk `UserDBContext` (SQL Server) dan `MongoDBData` (MongoDB).
+- **Routing SPA:**  
+  File `app.js` memetakan URL seperti `/#/input-nilai` ke:
+  - Template: `templates/penilaian/input-nilai.html`
+  - Controller: `InputNilaiController.js`
 
-2. Buat sebuah Nama Project, Dan jelaskan kenapa Menggunakan Project Tersebut 
+---
 
-Nama Proyek: MyAssessment
+## 🧠 Alasan Pemilihan Proyek
 
-Nama Perusahaan (Developer): PT. Hyoka Wanssss
+Proyek **MyAssessment** dipilih karena merupakan contoh ideal untuk mendemonstrasikan **arsitektur hybrid data**.  
+Aplikasi ini menjawab kebutuhan nyata dunia pendidikan:
 
-Alasan Pemilihan Proyek: Proyek "MyAssessment" (Sistem Penilaian Siswa) ini dipilih karena merupakan studi kasus yang ideal untuk mendemonstrasikan arsitektur Polyglot Persistence (menggunakan beberapa database berbeda). Proyek ini memecahkan satu masalah bisnis (input nilai) dengan dua kebutuhan data yang sangat berbeda:
+- **Akurasi & Konsistensi:**  
+  Nilai siswa (Tugas, UTS, UAS) disimpan secara aman di SQL Server.  
+- **Audit & Skalabilitas:**  
+  Setiap perubahan nilai dicatat otomatis di MongoDB, sehingga riwayat bisa dilacak tanpa membebani database utama.
 
-Kebutuhan Akurasi (SQL Server): Data nilai siswa (Tugas, UTS, UAS) adalah data transaksional yang harus akurat, terstruktur, dan konsisten. SQL Server sempurna untuk menyimpan data nilai final ini.
+### ✨ Penamaan
+- **"MyAssessment"** → menekankan kesan personal (“My”) dan profesional (“Assessment”).  
+- **"PT. Hyoka Wanssss"** → “Hyoka” (評価) berarti *evaluasi* dalam bahasa Jepang, menggambarkan esensi proyek. “Wanssss” adalah identitas khas developer.
 
-Kebutuhan Audit & Volume (MongoDB): Institusi perlu melacak setiap perubahan nilai (siapa, kapan, apa yang diubah). Data log ini bervolume sangat besar dan skemanya bisa fleksibel. MongoDB sangat cepat untuk "menelan" (mencatat) data log baru tanpa membebani database SQL Server utama.
+---
 
-Proyek ini secara efektif menunjukkan cara menggunakan teknologi yang tepat (SQL Server) untuk data terstruktur dan teknologi yang tepat (MongoDB) untuk data tidak terstruktur (log) dalam satu aplikasi yang sama.
+## 🔄 Bisnis Proses Utama
 
-Alasan Penamaan:
+### **Proses: Input dan Audit Nilai Siswa**
 
-"MyAssessment": Nama ini dipilih agar mudah diingat. "My" memberikan kesan personal bagi pengguna (guru), dan "Assessment" (Penilaian) adalah istilah profesional yang mencakup seluruh proses (Tugas, UTS, UAS), bukan hanya "Nilai".
+**Aktor:** Guru  
+**Sistem:** Aplikasi MyAssessment (IIS, ASP.NET API, SQL Server, MongoDB)
 
-"PT. Hyoka Wanssss": Nama perusahaan ini menggabungkan keahlian dan identitas. "Hyoka" (評価) adalah bahasa Jepang untuk "Evaluasi" atau "Penilaian", yang memposisikan perusahaan sebagai ahli di bidang ini. "Wanssss" adalah identitas personal dari developer.
+**Alur Lengkap:**
 
-3. Buatkan Bisnis Proses nya, dan dijelaskan 
+1. **Login** → Guru memasukkan kredensial, diverifikasi di `MyAssessment_auth` (SQL Server).  
+2. **Navigasi** → Guru membuka menu `Penilaian → Input Nilai`.  
+3. **Input Data** → Frontend (AngularJS) menampilkan `input-nilai.html`.  
+4. **Kirim Data** → Data dikirim via POST ke `http://localhost:9000/api/penilaian/input`.  
+5. **Proses Backend:**
+   - Validasi oleh `PenilaianController.cs`  
+   - Hitung `NilaiAkhir = 30% Tugas + 30% UTS + 40% UAS`
+6. **Simpan ke Database:**
+   - **SQL Server:** data utama disimpan ke `dbo.Grades`
+   - **MongoDB:** salinan JSON log disimpan ke `GradeAuditLog`
+7. **Respon ke Frontend** → Muncul notifikasi: *“Nilai berhasil disimpan.”*
 
-Bisnis proses utama adalah "Proses Input dan Audit Nilai Siswa".
+---
 
-Aktor: Guru (Pengguna) Sistem: Aplikasi MyAssessment (IIS, ASP.NET API, SQL Server, MongoDB)
+## 🧩 Model Data (Hybrid Architecture)
 
-Alur Proses:
+### **1. SQL Server (Data Operasional)**
+Digunakan untuk data terstruktur dan relasional.
 
-Autentikasi: Guru melakukan login ke aplikasi. Sistem memvalidasi kredensialnya ke database MyAssessment_auth (SQL Server).
+- **Database:** `MyAssessment_auth`  
+  - `AspNetUsers`  
+  - `AspNetRoles`  
+  - `AspNetUserRoles`  
+  - `RoleMenuMapping`  
+- **Database:** `MyAssessment`  
+  - `dbo.Grades` — menyimpan nilai final siswa  
 
-Navigasi: Guru mengklik menu "Penilaian" -> "Input Nilai" di sidebar.
+### **2. MongoDB (Data Audit Log)**
+Digunakan untuk mencatat setiap perubahan nilai (append-only).
 
-Inisiasi Frontend: Aplikasi (AngularJS) memuat halaman input-nilai.html dan InputNilaiController.js.
+- **Collection:** `GradeAuditLog`  
+  Berisi snapshot data lengkap + action (“CREATE” / “UPDATE”) + timestamp + `NilaiId`.
 
-Input Data: Guru mengisi formulir (Nama Siswa, NIS, Mapel, Nilai Tugas, UTS, UAS) lalu mengklik "Simpan".
+🔗 **Relasi lintas sistem:**  
+`Id` dari `dbo.Grades` (SQL Server) disimpan sebagai `NilaiId` di `GradeAuditLog` (MongoDB),  
+memungkinkan pelacakan riwayat nilai berdasarkan satu kunci.
 
-Pengiriman Frontend: InputNilaiController.js memvalidasi data dan mengirimkannya (via POST) ke endpoint backend di http://localhost:9000/api/penilaian/input.
+---
 
-Penerimaan Backend (IIS & ASP.NET):
+## 👥 Skema Tim Proyek
 
-IIS menerima panggilan API dan meneruskannya ke PenilaianController.cs.
+Proyek ini dikerjakan oleh **satu orang (solo developer)** dengan berbagai peran dalam satu waktu:
 
-Controller memvalidasi data menggunakan NilaiModel.cs.
+| Peran | Tanggung Jawab |
+|-------|-----------------|
+| **Project Manager / Product Owner** | Menentukan requirement & scope proyek |
+| **Database Administrator (DBA)** | Mendesain model data, membuat ERD, dan script SQL |
+| **Backend Developer** | Membangun Web API & logika data (C#, SQL, MongoDB) |
+| **Frontend Developer** | Membuat tampilan SPA (AngularJS, HTML, JS, CSS) |
+| **DevOps / System Admin** | Men-setup IIS, koneksi database, dan deployment |
+| **Quality Assurance (QA)** | Menguji alur sistem dan integrasi antar database |
 
-Controller menghitung NilaiAkhir menggunakan rumus (misal: 30% Tugas + 30% UTS + 40% UAS).
+> 👨‍💻 Developer: **Wawan Suwandi** (PT. Hyoka Wanssss)
 
-Penyimpanan Database (Inti Proses):
+---
 
-(SQL Server): Controller menjalankan INSERT untuk menyimpan data nilai utama (Nama, NIS, NilaiAkhir, dll.) ke tabel dbo.Grades di database MyAssessment. Sistem mendapatkan Id dari data yang baru disimpan.
+## 🗂️ Struktur Direktori Utama
 
-(MongoDB): Setelah SQL berhasil, Controller membuat satu dokumen JSON (log) yang berisi salinan lengkap data nilai, Action: "CREATE", Timestamp, dan NilaiId (dari SQL). Dokumen ini disimpan ke koleksi GradeAuditLog di MongoDB.
-
-Respon: Sistem backend mengirim balasan "Sukses" ke frontend.
-
-Konfirmasi: Frontend menampilkan notifikasi "Nilai berhasil disimpan" kepada Guru.
-
-4. Buatkan Model Data nya, dan dijelaskan 
-
-Model data proyek ini adalah model Hybrid atau Polyglot Persistence, yang sengaja memisahkan data operasional dan data audit.
-
-Grup 1: SQL Server (Data Operasional & Keamanan) Model ini digunakan untuk data yang terstruktur, relasional, dan menuntut konsistensi (ACID).
-
-Database MyAssessment_auth: Mengelola keamanan. AspNetUsers (pengguna) terhubung ke AspNetRoles (peran) melalui tabel AspNetUserRoles. Peran ini kemudian dihubungkan ke Menus melalui RoleMenuMapping untuk mengontrol hak akses sidebar.
-
-Database MyAssessment: Menyimpan data inti aplikasi. Tabel utamanya adalah dbo.Grades, yang berisi data final nilai siswa (NIS, Mapel, Tugas, UTS, UAS, NilaiAkhir).
-
-Grup 2: MongoDB (Data Audit Log) Model ini digunakan untuk data yang bervolume tinggi, semi-terstruktur, dan bersifat append-only (hanya ditambah, tidak pernah diubah).
-
-Koleksi GradeAuditLog: Setiap dokumen di sini adalah "foto" (snapshot) dari data nilai pada saat data itu dibuat atau diubah. Ini berisi action ("CREATE" atau "UPDATE"), data lengkap, timestamp, dan NilaiId.
-
-Hubungan Lintas Sistem (Kunci Penjelasan): Model data ini dihubungkan oleh satu key (kunci). Kolom Id (Primary Key) dari tabel dbo.Grades (SQL Server) disimpan sebagai field NilaiId di dalam setiap dokumen di GradeAuditLog (MongoDB). Ini memungkinkan kita untuk melacak seluruh riwayat perubahan untuk satu data nilai spesifik hanya dengan mem-filter NilaiId di MongoDB.
-
-5. Buatkan schema Team dalam Mengerjakan project tersebut 
-
-Karena proyek ini dikerjakan oleh satu orang (Solo Developer), skema tim mencerminkan berbagai "peran" atau "topi" yang harus dipakai oleh satu developer tersebut untuk menyelesaikan proyek dari awal hingga akhir.
-
-Skema Tim: "Full-Stack Developer (Solo)"
-
-Developer: Wawan Suwandi (PT. Hyoka Wanssss)
-
-Pembagian Peran dan Tanggung Jawab:
-
-Project Manager / Product Owner:
-
-Tugas: Mendefinisikan requirement proyek (sesuai Poin 1-6), menentukan scope (penilaian siswa), dan memastikan proyek selesai tepat waktu.
-
-Database Administrator (DBA):
-
-Tugas: Merancang Model Data (Poin 4), membuat diagram ERD, dan menulis script SQL (CreateDatabase.sql) untuk membuat tabel dbo.Grades.
-
-Backend Developer:
-
-Tugas: Melakukan Setting Web Service (Poin 1). Membuat API (C#), PenilaianController.cs, NilaiModel.cs, dan menulis logika untuk terhubung dan menyimpan data ke SQL Server dan MongoDB.
-
-Frontend Developer:
-
-Tugas: Melakukan Configuration Web (Poin 1). Membuat Mockup (Poin 6), halaman HTML (input-nilai.html), styling (CSS), dan logika frontend (InputNilaiController.js, app.js).
-
-DevOps & System Administrator:
-
-Tugas: Melakukan Setting IIS (Poin 1), menginstal library (NuGet MongoDB.Driver), dan melakukan deployment (mem-publish) aplikasi agar bisa diakses melalui http://localhost:9000/.
-
-Quality Assurance (QA) / Tester:
-
-Tugas: Memastikan semua alur (Bisnis Proses, Poin 3) berjalan, tombol "Simpan" berfungsi, dan data benar-benar masuk ke kedua database.
-
-Deskripsi Repositori GitHub
-MyAssessment (PT. Hyoka Wanssss)
-
-Aplikasi web sistem penilaian siswa (Student Gradebook) yang dibangun sebagai studi kasus arsitektur Polyglot Persistence.
-
-Proyek ini mendemonstrasikan bagaimana ASP.NET Web API (dihosting di IIS) mengelola data transaksional di SQL Server (nilai akhir siswa) sambil secara bersamaan mencatat jejak audit (audit log) yang immutable (abadi) ke MongoDB setiap kali ada perubahan data.
-
-Frontend dibangun sebagai Single Page Application (SPA) menggunakan AngularJS.
-
-Teknologi Utama:
-
-Hosting: IIS (Internet Information Services)
-
-Backend: C# ASP.NET Web API
-
-Database Operasional (Nilai): SQL Server
-
-Database Audit (Log): MongoDB
-
-Frontend: AngularJS (SPA), HTML, JavaScript
